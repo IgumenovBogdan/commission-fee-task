@@ -1,0 +1,31 @@
+version: '3'
+services:
+    nginx:
+        build:
+            context: ./
+            dockerfile: docker/development/nginx/Dockerfile
+        volumes:
+            - ./:/var/www
+        ports:
+            - "85:80"
+        depends_on:
+            - php-fpm
+
+    php-fpm:
+        build:
+            context: ./
+            dockerfile: docker/development/php-fpm/Dockerfile
+        volumes:
+            - ./:/var/www
+
+    php-cli:
+        build:
+            context: ./
+            dockerfile: docker/development/php-cli/Dockerfile
+        volumes:
+            - ./:/var/www
+            - composer:/root/.composer/cache
+
+volumes:
+    composer:
+
